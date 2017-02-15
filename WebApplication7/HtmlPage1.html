@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+	<meta charset="utf-8" />
+    <script src="Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="Scripts//bootstrap.min.js" type="text/javascript"></script>
+</head>
+<body>
+    <a herf="javascript:void" id="getUserInfos">获取</a>
+    <ul data-bind="template":{name:'userinfoTemplate',foreach:userinfos"}></ul>
+    <script id="userinfoTemplate" type="text/html">
+
+        <li class="userinfo">
+            <header>
+
+                <div class="info">
+                    <strong>
+
+                        <span dat-bind="text:Name"></span>
+
+                    </strong>
+
+                </div>
+
+            </header>
+
+
+        </li>
+
+
+    </script>
+    <script type="text/javascript">
+            viewModel = {
+                userinfos: ko.observableArray([])
+            };
+
+            ko.applyBindings(viewModel);
+
+            $(function () {
+                $("#getUserInfos").click(function () {
+                    // 使用 Knockout 模型. 首先清空一下UserInfos.
+                    viewModel.userinfos([]);
+
+                    $.get('/WebApplication7/userInfo', function (data) {
+                        // 从API中
+                        // 得到返回的数据，更新 Knockout 模型并且绑定到页面UI模板中
+                        viewModel.userinfos(data);
+                    });
+
+                });
+            });
+    </script>
+</body>
+</html>
